@@ -16,9 +16,12 @@ export const GlobalProvider = ({ children }) => {
         theme,
       }}
     >
-      <GlobalUpdateContext.Provider value={setGlobalState}>
+      <GlobalUpdateContext.Provider value={useGlobalState}>
         {children}
       </GlobalUpdateContext.Provider>
     </GlobalContext.Provider>
   );
 };
+
+export const useGlobalState = () => useContext(GlobalContext);
+export const useGlobaleUpdate = () => useContext(GlobalUpdateContext);
