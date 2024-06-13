@@ -22,11 +22,11 @@ function Sidebar() {
       <div className="profile">
         <div className="profile-overlay"></div>
         <div>
-          <Image src="/avatar1.png" width={70} height={70} alt="profile pic" />
+          <Image src="/me.png" width={70} height={70} alt="profile pic" />
         </div>
         <h1>
-          <span>Wilma</span>
-          <span>Flintstone</span>
+          <span>Me </span>
+          <span>Myself</span>
         </h1>
       </div>
 
@@ -94,6 +94,34 @@ const SidebarStyled = styled.nav`
     border: 2px solid ${(props) => props.theme.borderColor2};
 
     opacity: 0.2;
+  }
+  h1 {
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.4rem;
+  }
+
+  .image,
+  h1 {
+    position: relative;
+    z-index: 1;
+  }
+
+  .image {
+    flex-shrink: 0;
+    display: inline-block;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    border-radius: 100%;
+
+    width: 70px;
+    height: 70px;
+  }
+
+  img {
+    border-radius: 100%;
+    transition: all 0.5s ease;
   }
 `;
 
