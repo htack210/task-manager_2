@@ -211,6 +211,10 @@ const SidebarStyled = styled.nav<{ collapsed: boolean }>`
   .active::before {
     width: 0.3rem;
   }
+
+  > button {
+    margin: 1.5rem;
+  }
 `;
 
 export default Sidebar;
