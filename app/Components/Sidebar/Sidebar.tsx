@@ -6,6 +6,7 @@ import Image from "next/image";
 import menu from "@/app/utils/menu";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useClerk } from "@clerk/nextjs";
 
 function Sidebar() {
   const { theme } = useGlobalState();
@@ -16,6 +17,7 @@ function Sidebar() {
   const handleClick = (link: string) => {
     router.push(link);
   };
+  const { signOut } = useClerk();
 
   return (
     <SidebarStyled theme={theme}>
@@ -48,7 +50,9 @@ function Sidebar() {
           );
         })}
       </ul>
-      <button>I'm not ready yet!</button>
+      <button onClick={() => signOut({ redirectUrl: "/signin" })}>
+        Sign Out
+      </button>
     </SidebarStyled>
   );
 }
