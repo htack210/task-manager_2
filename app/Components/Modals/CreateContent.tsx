@@ -94,7 +94,7 @@ function CreateContent() {
         <label htmlFor="date">Date</label>
         <input
           className="w-40 block rounded-lg border dark:border-none dark:bg-neutral-600 py-[9px] px-3 pr-4 text-sm text-black focus:border-blue-400 focus:ring-1 focus:ring-blue-400 focus:outline-none"
-          type="text"
+          type="date"
           id="date"
           value={date}
           name="date"
