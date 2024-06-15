@@ -1,9 +1,10 @@
 "use client";
 import { useGlobalState } from "@/app/context/globalProvider";
 import axios from "axios";
-import Error from "next/error";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import styled from "styled-components";
+import { add, plus } from "@/app/utils/Icons";
 
 function CreateContent() {
   const [title, setTitle] = useState("");
@@ -24,10 +25,10 @@ function CreateContent() {
         setDate(e.target.value);
         break;
       case "completed":
-        setCompleted(e.target.value);
+        setCompleted(e.target.checked);
         break;
       case "important":
-        setImportant(e.target.value);
+        setImportant(e.target.checked);
         break;
       default:
         break;
