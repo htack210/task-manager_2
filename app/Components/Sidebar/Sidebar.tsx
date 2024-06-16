@@ -7,6 +7,7 @@ import menu from "@/app/utils/menu";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useClerk } from "@clerk/nextjs";
+import { logout } from "@/app/utils/Icons";
 
 function Sidebar() {
   const { theme } = useGlobalState();
@@ -50,8 +51,11 @@ function Sidebar() {
           );
         })}
       </ul>
-      <button onClick={() => signOut({ redirectUrl: "/signin" })}>
-        Sign Out
+      <button
+        onClick={() => signOut({ redirectUrl: "/signin" })}
+        className="signOut block bg-custom-bg rounded-md border-2 border-gray-800 text-white px-4 py-2 hover:bg-slate-600 font-medium text-xs uppercase leading-normal transition duration-150 ease-in-out focus:outline-4 focus:ring-2 outline-4"
+      >
+        {logout} Sign Out
       </button>
     </SidebarStyled>
   );
