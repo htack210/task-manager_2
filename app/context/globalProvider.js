@@ -32,6 +32,10 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
+  const completedTasks = tasks.filter((task) => task.isCompleted === true);
+  const incompleteTasks = tasks.filter((task) => task.isCompleted === false);
+  const importantTasks = tasks.filter((task) => task.isImportant === true);
+
   React.useEffect(() => {
     if (user) allTasks();
   }, [user]);
@@ -55,6 +59,9 @@ export const GlobalProvider = ({ children }) => {
         tasks,
         deleteTask,
         isLoading,
+        completedTasks,
+        importantTasks,
+        incompleteTasks,
       }}
     >
       <GlobalUpdateContext.Provider value={useGlobalState}>
