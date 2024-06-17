@@ -52,13 +52,16 @@ function Sidebar() {
           );
         })}
       </ul>
-      {/* <button
-        onClick={() => signOut({ redirectUrl: "/signin" })}
-        className="signOut block bg-custom-bg rounded-md border-2 border-gray-800 text-white px-4 py-2 hover:bg-slate-600 font-medium text-xs uppercase leading-normal transition duration-150 ease-in-out focus:outline-4 focus:ring-2 outline-4"
+      <button
+        // onClick={() => signOut({ redirectUrl: "/signin" })}
+        onClick={() => {
+          signOut(() => router.push("/signin"));
+        }}
+        className="signOut block bg-custom-bg rounded-md border-2 border-gray-800 text-white px-4 py-2 hover:bg-slate-600 font-medium text-lg uppercase leading-normal transition duration-150 ease-in-out focus:outline-4 focus:ring-2 outline-4"
       >
         {logout} Sign Out
-      </button> */}
-      <div className="sign-out relative m-6">
+      </button>
+      {/* <div className="sign-out relative m-6">
         <Button
           click={() => {
             signOut(() => router.push("/signin"));
@@ -71,7 +74,7 @@ function Sidebar() {
           fw={"500"} //font weight
           fs={"1.2rem"} // font size
         />
-      </div>
+      </div> */}
     </SidebarStyled>
   );
 }

@@ -4,6 +4,7 @@ import "./globals.css";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import GlobalStyleProvider from "./Providers/GlobalStyleProvider";
 import ContextProvider from "./Providers/ContextProvider";
+import NextTopLoader from "nextjs-toploader";
 import {
   ClerkProvider,
   SignInButton,
@@ -43,6 +44,12 @@ export default function RootLayout({
           />
         </head>
         <body className={poppins.className}>
+          <NextTopLoader
+            height={5}
+            color="#27AE60"
+            easing="cubic-bezier(0.53,0.21,0,1)"
+            showSpinner={false}
+          />
           <ContextProvider>
             <GlobalStyleProvider>
               {userId && <Sidebar />}
