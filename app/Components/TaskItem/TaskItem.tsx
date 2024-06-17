@@ -19,7 +19,7 @@ interface Props {
 
 function TaskItem({ task }: Props) {
   const { title, description, date, isCompleted, id } = task;
-  const { theme } = useGlobalState();
+  const { theme, deleteTask } = useGlobalState();
   return (
     <TaskItemStyled className="task" theme={theme}>
       <h1>{title}</h1>
@@ -38,7 +38,15 @@ function TaskItem({ task }: Props) {
           </button>
         )}
         <button className="edit ml-auto">{edit} Edit</button>
-        <button className="delete">{trash} Delete</button>
+        <button
+          className="delete"
+          onClick={() => {
+            deleteTask(id);
+          }}
+        >
+          {" "}
+          Delete
+        </button>
       </div>
     </TaskItemStyled>
   );

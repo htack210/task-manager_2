@@ -13,10 +13,11 @@ interface Props {
 }
 
 function Tasks({ title, tasks }: Props) {
-  const { theme } = useGlobalState();
+  const { theme, isLoading } = useGlobalState();
 
   return (
     <TasksStyled theme={theme}>
+      <CreateContent />
       <h1>{title}</h1>
       <div className="tasks grid">
         {tasks.map((task) => (

@@ -14,7 +14,7 @@ export async function POST(req: Request) {
 
         if (!title || !description || !date) {
             return NextResponse.json({
-                error: "Missing required fields",
+                error: "Missing required fields. Check title, description, and date fields.",
                 status: 400,
             });
         }
