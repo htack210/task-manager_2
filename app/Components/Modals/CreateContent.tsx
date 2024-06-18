@@ -10,7 +10,7 @@ function CreateContent() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
-  const [d, setd] = useState(false);
+  const [completed, setd] = useState(false);
   const [important, setImportant] = useState(false);
 
   const handleChange = (name: string) => (e: any) => {
@@ -24,7 +24,7 @@ function CreateContent() {
       case "date":
         setDate(e.target.value);
         break;
-      case "d":
+      case "completed":
         setd(e.target.checked);
         break;
       case "important":
@@ -42,7 +42,7 @@ function CreateContent() {
       title,
       description,
       date,
-      d,
+      completed,
       important,
     };
 
@@ -104,21 +104,21 @@ function CreateContent() {
         />
       </div>
 
-      {/* isd */}
+      {/* Completed */}
       <div className="flex items-center mb-4">
         <label
-          htmlFor="d"
+          htmlFor="completed"
           className="ms-1 mr-2 text-base font-medium text-white dark:text-gray-300 hover:cursor-pointer"
         >
-          d
+          Toggle Completed
         </label>
         <input
           className="w-4 h-4 text-blue-500 bg-gray-100 border-gray-300 rounded focus:ring-blue-400 dark:focus:ring-blue-500 dark:ring-offset-gray-700 focus:ring-1 dark:bg-gray-700 dark:border-gray-600 hover:cursor-pointer"
           type="checkbox"
-          id="d"
-          value={d.toString()}
-          name="d"
-          onChange={handleChange("d")}
+          id="completed"
+          value={completed.toString()}
+          name="completed"
+          onChange={handleChange("completed")}
         />
       </div>
 
