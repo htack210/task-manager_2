@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import styled from "styled-components";
 import { add, plus } from "@/app/utils/Icons";
+import Modal from "../Modals/Modal";
 
 function CreateContent() {
   const [title, setTitle] = useState("");
@@ -12,6 +13,8 @@ function CreateContent() {
   const [date, setDate] = useState("");
   const [completed, setd] = useState(false);
   const [important, setImportant] = useState(false);
+
+  const { theme, allTasks, closeModal } = useGlobalState();
 
   const handleChange = (name: string) => (e: any) => {
     switch (name) {
@@ -37,7 +40,6 @@ function CreateContent() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
     const task = {
       title,
       description,
@@ -52,7 +54,12 @@ function CreateContent() {
       if (res.data.error) {
         toast.error(res.data.error);
       }
-      toast.success("Task created successfully!");
+
+      if (!res.data.error) {
+        toast.success("Task created successfully!");
+        closeModal();
+        allTasks();
+      }
     } catch (error) {
       toast.error("Something went wrong. Your toast is burnt!\n" + error);
       console.log(error);
@@ -60,7 +67,10 @@ function CreateContent() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      className="task-form bg-neutral-700 rounded-2xl border-2 border-gray-600 p-4 w-96"
+    >
       <h1>Create a Task</h1>
       {/* Title */}
       <div className="mb-4 w-full">
@@ -144,7 +154,7 @@ function CreateContent() {
           type="submit"
           className="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-md"
         >
-          Button
+          Submit Task
         </button>
       </div>
     </form>
