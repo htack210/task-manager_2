@@ -11,7 +11,7 @@ import { arrowLeft, bars, logout } from "@/app/utils/Icons";
 import { useClerk, UserButton, useUser } from "@clerk/nextjs";
 
 function Sidebar() {
-  const { theme } = useGlobalState();
+  const { theme, collapsed } = useGlobalState();
   const { signOut } = useClerk();
 
   const { user } = useUser();
@@ -31,6 +31,7 @@ function Sidebar() {
 
   return (
     <SidebarStyled theme={theme}>
+      <button className="toggle-nav">{collapsed ? bars : arrowLeft}</button>
       <div className="profile">
         <div className="profile-overlay"></div>
         <div className="image">
@@ -103,6 +104,25 @@ const SidebarStyled = styled.nav`
   justify-content: space-between;
 
   color: ${(props) => props.theme.colorGrey3};
+
+  .toggle-nav{
+    padding: .5rem;  
+    position: absolute;
+    right: -2rem;
+    top: 5rem;
+    
+    border-top-right-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+
+    background-color: ${(props) => props.theme.colorBg2};
+    z-index: 110;
+  }
+
+  @media screen and (max-width: 768px) {
+    position: fixed;
+    height: calc(100vh - 2rem);
+    z-index: 100;
+  }
 
   .user-btn {
     .cl-userButtonBox {

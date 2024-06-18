@@ -1,5 +1,7 @@
-export const bars = <i className="fa-solid fa-bars fa-beat"></i>;
-export const arrowLeft = <i className="fa-solid fa-arrow-left fa-beat"></i>;
+// export const bars = <i className="fa-solid fa-bars fa-beat"></i>;
+export const bars = <i className="fa-solid fa-bars"></i>;
+// export const arrowLeft = <i className="fa-solid fa-arrow-left fa-beat"></i>;
+export const arrowLeft = <i className="fa-solid fa-arrow-left"></i>;
 
 export const add = <i className="fa-solid fa-plus"></i>;
 export const moon = <i className="fa-solid fa-moon"></i>;
@@ -23,4 +25,5 @@ export const trash = <i className="fa-solid fa-trash"></i>;
 export const admin = <i className="fa-solid fa-lock"></i>;
 export const linked = <i className="fa-brands fa-linkedin"></i>;
 export const mailIcon = <i className="fa-solid fa-envelope"></i>;
-export const plus = <i className="fa-solid fa-plus fa-beat-fade"></i>;
+// export const plus = <i className="fa-solid fa-plus fa-beat-fade"></i>;
+export const plus = <i className="fa-solid fa-plus"></i>;
