@@ -11,7 +11,7 @@ import { arrowLeft, bars, logout } from "@/app/utils/Icons";
 import { useClerk, UserButton, useUser } from "@clerk/nextjs";
 
 function Sidebar() {
-  const { theme, collapsed } = useGlobalState();
+  const { theme, collapsed, collapseMenu } = useGlobalState();
   const { signOut } = useClerk();
 
   const { user } = useUser();
@@ -30,8 +30,10 @@ function Sidebar() {
   };
 
   return (
-    <SidebarStyled theme={theme}>
-      <button className="toggle-nav">{collapsed ? bars : arrowLeft}</button>
+    <SidebarStyled theme={theme} collapsed={collapsed}>
+      <button className="toggle-nav" onClick={collapseMenu}>
+        {collapsed ? bars : arrowLeft}
+      </button>
       <div className="profile">
         <div className="profile-overlay"></div>
         <div className="image">
@@ -92,8 +94,8 @@ function Sidebar() {
   );
 }
 
-const SidebarStyled = styled.nav`
-  position: relative;
+const SidebarStyled = styled.nav<{ collapsed: boolean }>`
+  //   position: relative;
   width: ${(props) => props.theme.sidebarWidth};
   background-color: ${(props) => props.theme.colorBg2};
   border: 2px solid ${(props) => props.theme.borderColor2};
@@ -105,25 +107,35 @@ const SidebarStyled = styled.nav`
 
   color: ${(props) => props.theme.colorGrey3};
 
-  .toggle-nav{
-    padding: .5rem;  
-    position: absolute;
-    right: -2rem;
-    top: 5rem;
-    
-    border-top-right-radius: .5rem;
-    border-bottom-right-radius: .5rem;
-
-    background-color: ${(props) => props.theme.colorBg2};
-    z-index: 110;
-  }
-
   @media screen and (max-width: 768px) {
     position: fixed;
     height: calc(100vh - 2rem);
     z-index: 100;
+
+    transition: all 0.3s cubic-bezier(0.53, 0.21, 0, 1);
+    transform: ${(props) =>
+      props.collapsed ? "translateX(-107%)" : "translateX(0)"};
+
+    .toggle-nav {
+      display: block !important;
+    }
   }
 
+  .toggle-nav {
+    display: none;
+    padding: 0.8rem 0.9rem;
+    position: absolute;
+    right: -45px;
+    top: 1.8rem;
+
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+
+    background-color: ${(props) => props.theme.colorBg2};
+    border-right: 2px solid ${(props) => props.theme.borderColor2};
+    border-top: 2px solid ${(props) => props.theme.borderColor2};
+    border-bottom: 2px solid ${(props) => props.theme.borderColor2};
+  }
   .user-btn {
     .cl-userButtonBox {
       width: 100%;

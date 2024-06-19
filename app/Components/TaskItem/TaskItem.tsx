@@ -4,6 +4,10 @@ import { useGlobalState } from "@/app/context/globalProvider";
 import { edit, trash } from "@/app/utils/Icons";
 import React from "react";
 import styled from "styled-components";
+import CreateContent from "../Modals/CreateContent";
+import EditContent from "../Modals/EditContent";
+import Modal from "../Modals/Modal";
+import ModalEdit from "../Modals/ModalEdit";
 import formatDate from "@/app/utils/formatDate";
 
 interface Props {
@@ -19,9 +23,19 @@ interface Props {
 
 function TaskItem({ task }: Props) {
   const { title, description, date, isCompleted, id } = task;
-  const { theme, deleteTask, updateTask } = useGlobalState();
+  const {
+    theme,
+    deleteTask,
+    updateTask,
+    modal,
+    modalEdit,
+    openModal,
+    openModalEdit,
+  } = useGlobalState();
   return (
     <TaskItemStyled className="task" theme={theme}>
+      {modal && <Modal content={<CreateContent />} />}
+      {modalEdit && <ModalEdit content={<EditContent />} />}
       <h1>{title}</h1>
       <p>{description}</p>
       <p>{isCompleted}</p>
@@ -55,7 +69,13 @@ function TaskItem({ task }: Props) {
             Incomplete
           </button>
         )}
-        <button className="edit ml-auto">{edit} Edit</button>
+        {/* Use update task to edit task items */}
+
+        <button className="edit ml-auto" onClick={openModalEdit}>
+          {edit} Edit
+        </button>
+
+        {/* Delete task by id */}
         <button
           className="delete mr-1"
           onClick={() => {

@@ -6,7 +6,7 @@ function page() {
   const { user } = useUser();
   if (!user) {
     return (
-      <div>
+      <div className="flex items-center justify-center h-full">
         <SignUp routing="hash" fallbackRedirectUrl={"/signin"} />
       </div>
     );

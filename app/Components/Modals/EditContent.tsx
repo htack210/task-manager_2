@@ -3,18 +3,14 @@ import { useGlobalState } from "@/app/context/globalProvider";
 import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import styled from "styled-components";
-import { add, plus } from "@/app/utils/Icons";
-import Modal from "../Modals/Modal";
 
-function CreateContent() {
+function EditContent() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [completed, setCompleted] = useState(false);
   const [important, setImportant] = useState(false);
-
-  const { theme, allTasks, closeModal } = useGlobalState();
+  const { theme, allTasks, closeModalEdit } = useGlobalState();
 
   const handleChange = (name: string) => (e: any) => {
     switch (name) {
@@ -57,7 +53,7 @@ function CreateContent() {
 
       if (!res.data.error) {
         toast.success("Task created successfully!");
-        closeModal();
+        closeModalEdit();
         allTasks();
       }
     } catch (error) {
@@ -71,7 +67,7 @@ function CreateContent() {
       onSubmit={handleSubmit}
       className="task-form bg-neutral-700 rounded-2xl border-2 border-gray-600 p-4 w-96"
     >
-      <h1>Create a Task</h1>
+      <h1>Edit Task</h1>
       {/* Title */}
       <div className="mb-4 w-full">
         <label htmlFor="title">Title</label>
@@ -161,4 +157,4 @@ function CreateContent() {
   );
 }
 
-export default CreateContent;
+export default EditContent;

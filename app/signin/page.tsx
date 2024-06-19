@@ -4,7 +4,7 @@ import { SignIn } from "@clerk/nextjs";
 
 function page() {
   return (
-    <div>
+    <div className="flex items-center justify-center h-full">
       <SignIn routing="hash" fallbackRedirectUrl={"/"} />
     </div>
   );
