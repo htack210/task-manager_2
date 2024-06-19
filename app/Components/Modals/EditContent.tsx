@@ -10,7 +10,7 @@ function EditContent() {
   const [date, setDate] = useState("");
   const [completed, setCompleted] = useState(false);
   const [important, setImportant] = useState(false);
-  const { theme, allTasks, closeModalEdit } = useGlobalState();
+  const { allTasks, closeModalEdit } = useGlobalState();
 
   const handleChange = (name: string) => (e: any) => {
     switch (name) {

@@ -23,15 +23,8 @@ interface Props {
 
 function TaskItem({ task }: Props) {
   const { title, description, date, isCompleted, id } = task;
-  const {
-    theme,
-    deleteTask,
-    updateTask,
-    modal,
-    modalEdit,
-    openModal,
-    openModalEdit,
-  } = useGlobalState();
+  const { theme, deleteTask, updateTask, modal, modalEdit, openModalEdit } =
+    useGlobalState();
   return (
     <TaskItemStyled className="task" theme={theme}>
       {modal && <Modal content={<CreateContent />} />}

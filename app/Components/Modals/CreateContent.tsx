@@ -3,9 +3,6 @@ import { useGlobalState } from "@/app/context/globalProvider";
 import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import styled from "styled-components";
-import { add, plus } from "@/app/utils/Icons";
-import Modal from "../Modals/Modal";
 
 function CreateContent() {
   const [title, setTitle] = useState("");
