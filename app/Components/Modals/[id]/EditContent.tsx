@@ -1,10 +1,23 @@
 "use client";
 import { useGlobalState } from "@/app/context/globalProvider";
 import axios from "axios";
+import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-function EditContent() {
+// interface Props {
+//   task: {
+//     title: string;
+//     description: string;
+//     date: string;
+//     isCompleted: boolean;
+//     important: boolean;
+//     id: string;
+//   };
+// }
+
+function EditContent(task: any) {
+  const { params } = useParams();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
@@ -75,7 +88,7 @@ function EditContent() {
           className="w-full block rounded-lg border dark:border-none dark:bg-neutral-600 py-[9px] px-3 pr-4 text-sm text-black focus:border-blue-400 focus:ring-1 focus:ring-blue-400 focus:outline-none"
           type="text"
           id="title"
-          value={title}
+          value={task.title}
           name="title"
           onChange={handleChange("title")}
           placeholder="Your title here"
@@ -88,7 +101,7 @@ function EditContent() {
         <textarea
           className="w-full block rounded-lg border dark:border-none dark:bg-neutral-600 py-[9px] px-3 pr-4 text-sm text-black focus:border-blue-400 focus:ring-1 focus:ring-blue-400 focus:outline-none"
           id="description"
-          value={description}
+          value={task.description}
           onChange={handleChange("description")}
           name="description"
           rows={4}
@@ -103,7 +116,7 @@ function EditContent() {
           className="w-40 block rounded-lg border dark:border-none dark:bg-neutral-600 py-[9px] px-3 pr-4 text-sm text-black focus:border-blue-400 focus:ring-1 focus:ring-blue-400 focus:outline-none"
           type="date"
           id="date"
-          value={date}
+          value={task.date}
           name="date"
           onChange={handleChange("date")}
           placeholder="Enter a date here."
@@ -122,7 +135,7 @@ function EditContent() {
           className="w-4 h-4 text-blue-500 bg-gray-100 border-gray-300 rounded focus:ring-blue-400 dark:focus:ring-blue-500 dark:ring-offset-gray-700 focus:ring-1 dark:bg-gray-700 dark:border-gray-600 hover:cursor-pointer"
           type="checkbox"
           id="completed"
-          value={completed.toString()}
+          value={task.completed}
           name="completed"
           onChange={handleChange("completed")}
         />
@@ -140,7 +153,7 @@ function EditContent() {
           className="w-4 h-4 text-blue-500 bg-gray-100 border-gray-300 rounded focus:ring-blue-400 dark:focus:ring-blue-500 dark:ring-offset-gray-700 focus:ring-1 dark:bg-gray-700 dark:border-gray-600 hover:cursor-pointer"
           type="checkbox"
           id="important"
-          value={important.toString()}
+          value={task.important}
           name="important"
           onChange={handleChange("important")}
         />

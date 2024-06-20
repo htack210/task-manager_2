@@ -8,8 +8,8 @@ interface Props {
 }
 
 function ModalEdit({ content }: Props) {
+  console.log("Ye olde content: ", content);
   const { closeModalEdit } = useGlobalState();
-
   return (
     <ModalEditStyled>
       <div className="modal-overlay" onClick={closeModalEdit}></div>

@@ -5,10 +5,11 @@ import { edit, trash } from "@/app/utils/Icons";
 import React from "react";
 import styled from "styled-components";
 import CreateContent from "../Modals/CreateContent";
-import EditContent from "../Modals/EditContent";
+import EditContent from "../Modals/[id]/EditContent";
 import Modal from "../Modals/Modal";
 import ModalEdit from "../Modals/ModalEdit";
 import formatDate from "@/app/utils/formatDate";
+import { useParams } from "next/navigation";
 
 interface Props {
   task: {
@@ -28,7 +29,7 @@ function TaskItem({ task }: Props) {
   return (
     <TaskItemStyled className="task" theme={theme}>
       {modal && <Modal content={<CreateContent />} />}
-      {modalEdit && <ModalEdit content={<EditContent />} />}
+      {modalEdit && <ModalEdit content={EditContent(task)} />}
       <h1>{title}</h1>
       <p>{description}</p>
       <p>{isCompleted}</p>
@@ -64,7 +65,12 @@ function TaskItem({ task }: Props) {
         )}
         {/* Use update task to edit task items */}
 
-        <button className="edit ml-auto" onClick={openModalEdit}>
+        <button
+          className="edit ml-auto"
+          onClick={() => {
+            openModalEdit();
+          }}
+        >
           {edit} Edit
         </button>
 
