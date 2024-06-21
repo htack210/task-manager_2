@@ -5,12 +5,7 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 
 function EditContent(task: any) {
-  // const [title, setTitle] = useState("");
-  const [title, setTitle] = useState(() => {
-    // Some expensive computation or data fetching logic
-    return "Computed Title";
-  });
-
+  const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [completed, setCompleted] = useState(false);
