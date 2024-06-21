@@ -2,13 +2,12 @@
 import styled from "styled-components";
 import { useGlobalState } from "../../context/globalProvider";
 import React from "react";
-
+import prisma from "../../utils/connect";
 interface Props {
   content: React.ReactNode;
 }
 
 function ModalEdit({ content }: Props) {
-  console.log("Ye olde content: ", content);
   const { closeModalEdit } = useGlobalState();
   return (
     <ModalEditStyled>

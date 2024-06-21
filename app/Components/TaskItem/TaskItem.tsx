@@ -5,7 +5,7 @@ import { edit, trash } from "@/app/utils/Icons";
 import React from "react";
 import styled from "styled-components";
 import CreateContent from "../Modals/CreateContent";
-import EditContent from "../Modals/[id]/EditContent";
+import EditContent from "../Modals/EditContent";
 import Modal from "../Modals/Modal";
 import ModalEdit from "../Modals/ModalEdit";
 import formatDate from "@/app/utils/formatDate";
@@ -26,6 +26,14 @@ function TaskItem({ task }: Props) {
   const { title, description, date, isCompleted, id } = task;
   const { theme, deleteTask, updateTask, modal, modalEdit, openModalEdit } =
     useGlobalState();
+  const handleModalEdit = async (task: any) => {
+    {
+      {
+        modalEdit && <ModalEdit content={EditContent(task)} />;
+      }
+    }
+  };
+
   return (
     <TaskItemStyled className="task" theme={theme}>
       {modal && <Modal content={<CreateContent />} />}
@@ -69,6 +77,7 @@ function TaskItem({ task }: Props) {
           className="edit ml-auto"
           onClick={() => {
             openModalEdit();
+            // handleModalEdit(task);
           }}
         >
           {edit} Edit

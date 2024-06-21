@@ -1,24 +1,16 @@
 "use client";
 import { useGlobalState } from "@/app/context/globalProvider";
 import axios from "axios";
-import { useParams } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-// interface Props {
-//   task: {
-//     title: string;
-//     description: string;
-//     date: string;
-//     isCompleted: boolean;
-//     important: boolean;
-//     id: string;
-//   };
-// }
-
 function EditContent(task: any) {
-  const { params } = useParams();
-  const [title, setTitle] = useState("");
+  // const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(() => {
+    // Some expensive computation or data fetching logic
+    return "Computed Title";
+  });
+
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [completed, setCompleted] = useState(false);
