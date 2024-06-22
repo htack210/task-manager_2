@@ -2,25 +2,37 @@
 import { useGlobalState } from "@/app/context/globalProvider";
 import axios from "axios";
 import { now } from "moment";
+import { checkIsOnDemandRevalidate } from "next/dist/server/api-utils";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-export default function Page({ params }: { params: { id: string } }) {
+export default async function Page({ params }: { params: { id: string } }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [completed, setCompleted] = useState(false);
   const [important, setImportant] = useState(false);
-  const { allTasks, closeModalEdit } = useGlobalState();
+  // const { allTasks, closeModalEdit } = useGlobalState();
   const currDate = now().toLocaleString();
+  const tid = params.id;
+  const res = await axios.get(`/api/tasks/${tid}`);
+  const task = res?.data;
+
+  if (res) {
+    console.log("Ye olde data: ", task);
+  } else {
+    return toast.error("Your toast is burnt. Error retrieving task!\n");
+  }
+
   return (
     <>
-      <div className="flex justify-center">
+      <div className="flex justify-center flex-row m-auto">
         <form
           // onSubmit={handleSubmit}
           className="task-form bg-neutral-700 rounded-2xl border-2 border-gray-600 p-4 w-96"
         >
-          <h1 className="text-3xl text-center">Edit Task {params.id}</h1>
+          <h1 className="text-3xl text-center">Edit Task</h1>
+          <p className="text-xs text-center"> {tid}</p>
           {/* Title */}
           <div className="mb-4 w-full">
             <label htmlFor="title">Title</label>
@@ -28,7 +40,7 @@ export default function Page({ params }: { params: { id: string } }) {
               className="w-full block rounded-lg border dark:border-none dark:bg-neutral-600 py-[9px] px-3 pr-4 text-sm text-black focus:border-blue-400 focus:ring-1 focus:ring-blue-400 focus:outline-none"
               type="text"
               id="title"
-              value={"title"} //{task.title}
+              value={task.title}
               name="title"
               // onChange={handleChange("title")}
               placeholder="Your title here"
@@ -41,7 +53,7 @@ export default function Page({ params }: { params: { id: string } }) {
             <textarea
               className="w-full block rounded-lg border dark:border-none dark:bg-neutral-600 py-[9px] px-3 pr-4 text-sm text-black focus:border-blue-400 focus:ring-1 focus:ring-blue-400 focus:outline-none"
               id="description"
-              value={"Description"} //{task.description}
+              value={task.description}
               // onChange={handleChange("description")}
               name="description"
               rows={4}
@@ -56,7 +68,7 @@ export default function Page({ params }: { params: { id: string } }) {
               className="w-40 block rounded-lg border dark:border-none dark:bg-neutral-600 py-[9px] px-3 pr-4 text-sm text-black focus:border-blue-400 focus:ring-1 focus:ring-blue-400 focus:outline-none"
               type="date"
               id="date"
-              // value={task.date}
+              value={task.date}
               name="date"
               // onChange={handleChange("date")}
               placeholder="Enter a date here."
@@ -69,13 +81,13 @@ export default function Page({ params }: { params: { id: string } }) {
               htmlFor="completed"
               className="ms-1 mr-2 text-base font-medium text-white dark:text-gray-300 hover:cursor-pointer"
             >
-              Toggle Completed
+              Completed
             </label>
             <input
               className="w-4 h-4 text-blue-500 bg-gray-100 border-gray-300 rounded focus:ring-blue-400 dark:focus:ring-blue-500 dark:ring-offset-gray-700 focus:ring-1 dark:bg-gray-700 dark:border-gray-600 hover:cursor-pointer"
               type="checkbox"
               id="completed"
-              // value={true.toString()} //{task.completed}
+              value={task.isCompleted.toString()} //{task.completed}
               name="completed"
               // onChange={handleChange("completed")}
             />
@@ -93,7 +105,7 @@ export default function Page({ params }: { params: { id: string } }) {
               className="w-4 h-4 text-blue-500 bg-gray-100 border-gray-300 rounded focus:ring-blue-400 dark:focus:ring-blue-500 dark:ring-offset-gray-700 focus:ring-1 dark:bg-gray-700 dark:border-gray-600 hover:cursor-pointer"
               type="checkbox"
               id="important"
-              value={false.toString()} //{task.important}
+              value={task.isImportant} //{task.important}
               name="important"
               // onChange={handleChange("important")}
             />

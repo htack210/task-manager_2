@@ -27,13 +27,6 @@ function TaskItem({ task }: Props) {
   const { title, description, date, isCompleted, id } = task;
   const { theme, deleteTask, updateTask, modal, modalEdit, openModalEdit } =
     useGlobalState();
-  const handleModalEdit = async (task: any) => {
-    {
-      {
-        modalEdit && <ModalEdit content={EditContent(task)} />;
-      }
-    }
-  };
 
   return (
     <TaskItemStyled className="task" theme={theme}>
@@ -82,7 +75,7 @@ function TaskItem({ task }: Props) {
             className="
           rounded text-white py-2 px-4 font-semibold shadow-md focus:outline-none "
           >
-            <Link href={`/EditItem/${encodeURIComponent(id)}`}>{edit}</Link>
+            <Link href={`/EditItem/${id}`}>{edit}</Link>
           </button>
         </ToolTip>
         {/* Delete task by id */}
