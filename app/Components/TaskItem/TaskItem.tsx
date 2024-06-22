@@ -2,14 +2,15 @@
 
 import { useGlobalState } from "@/app/context/globalProvider";
 import { edit, trash } from "@/app/utils/Icons";
-import React from "react";
+import React, { ReactNode } from "react";
 import styled from "styled-components";
 import CreateContent from "../Modals/CreateContent";
 import EditContent from "../Modals/EditContent";
 import Modal from "../Modals/Modal";
 import ModalEdit from "../Modals/ModalEdit";
 import formatDate from "@/app/utils/formatDate";
-import { useParams } from "next/navigation";
+import Link from "next/link";
+import ToolTip from "@/app/ToolTip/ToolTip";
 
 interface Props {
   task: {
@@ -45,53 +46,56 @@ function TaskItem({ task }: Props) {
       <p className="date">{formatDate(date)}</p>
       <div className="task-footer">
         {isCompleted ? (
-          <button
-            className="completed  block mb-4 w-40 rounded-md bg-green-600 text-neutral-50 shadow-[0_4px_9px_-4px_rgba(51,45,45,0.7)] hover:bg-green-800 hover:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:bg-green-800 focus:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] active:bg-slate-400 active:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] px-6 pb-2 pt-2.5 text-xs font-extrabold uppercase leading-normal transition duration-150 ease-in-out focus:outline-none focus:ring-0"
-            onClick={() => {
-              const task = {
-                id,
-                isCompleted: !isCompleted,
-              };
-              updateTask(task);
-            }}
-          >
-            Completed
-          </button>
+          <ToolTip tooltip="Toggle">
+            <button
+              className="completed mb-4 w-40 rounded-md bg-green-600 text-neutral-50 shadow-[0_4px_9px_-4px_rgba(51,45,45,0.7)] hover:bg-green-800 hover:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:bg-green-800 focus:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] active:bg-slate-400 active:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] px-6 pb-2 pt-2.5 text-xs font-extrabold uppercase leading-normal transition duration-150 ease-in-out focus:outline-none focus:ring-0"
+              onClick={() => {
+                const task = {
+                  id,
+                  isCompleted: !isCompleted,
+                };
+                updateTask(task);
+              }}
+            >
+              Completed
+            </button>
+          </ToolTip>
         ) : (
+          <ToolTip tooltip="Toggle">
+            <button
+              className="incomplete mb-4 w-40 rounded-md bg-red-600 text-neutral-50 shadow-[0_4px_9px_-4px_rgba(51,45,45,0.7)] hover:bg-red-800 hover:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:bg-red-800 focus:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] active:bg-slate-400 active:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] px-6 pb-2 pt-2.5 text-xs font-extrabold uppercase leading-normal transition duration-150 ease-in-out focus:outline-none focus:ring-0"
+              onClick={() => {
+                const task = {
+                  id,
+                  isCompleted: !isCompleted,
+                };
+                updateTask(task);
+              }}
+            >
+              Incomplete
+            </button>
+          </ToolTip>
+        )}
+
+        <ToolTip tooltip="Edit this task...">
           <button
-            className="incomplete block mb-4 w-40 rounded-md bg-red-600 text-neutral-50 shadow-[0_4px_9px_-4px_rgba(51,45,45,0.7)] hover:bg-red-800 hover:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] focus:bg-red-800 focus:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] active:bg-slate-400 active:shadow-[0_8px_9px_-4px_rgba(51,45,45,0.2),0_4px_18px_0_rgba(51,45,45,0.1)] px-6 pb-2 pt-2.5 text-xs font-extrabold uppercase leading-normal transition duration-150 ease-in-out focus:outline-none focus:ring-0"
+            className="
+          rounded text-white py-2 px-4 font-semibold shadow-md focus:outline-none "
+          >
+            <Link href={`/EditItem/${encodeURIComponent(id)}`}>{edit}</Link>
+          </button>
+        </ToolTip>
+        {/* Delete task by id */}
+        <ToolTip tooltip="Delete this task. (Ain't no turnin' back from this one, baby!)">
+          <button
+            className="delete mr-1"
             onClick={() => {
-              const task = {
-                id,
-                isCompleted: !isCompleted,
-              };
-              updateTask(task);
+              deleteTask(id);
             }}
           >
-            Incomplete
+            {trash}
           </button>
-        )}
-        {/* Use update task to edit task items */}
-
-        <button
-          className="edit ml-auto"
-          onClick={() => {
-            openModalEdit();
-            // handleModalEdit(task);
-          }}
-        >
-          {edit} Edit
-        </button>
-
-        {/* Delete task by id */}
-        <button
-          className="delete mr-1"
-          onClick={() => {
-            deleteTask(id);
-          }}
-        >
-          {trash} Delete
-        </button>
+        </ToolTip>
       </div>
     </TaskItemStyled>
   );
