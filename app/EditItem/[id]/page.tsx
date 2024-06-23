@@ -115,6 +115,7 @@ export default function Page({ params }: { params: { id: string } }) {
               type="checkbox"
               id="completed"
               checked={completed}
+              value={completed.toString()}
               name="completed"
               onChange={handleChange("completed")}
             />
@@ -133,6 +134,7 @@ export default function Page({ params }: { params: { id: string } }) {
               type="checkbox"
               id="important"
               checked={important}
+              value={important.toString()}
               name="important"
               onChange={handleChange("important")}
             />
