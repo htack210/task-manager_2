@@ -9,7 +9,6 @@ export default function Page({ params }: { params: { id: string } }) {
   const [date, setDate] = useState("");
   const [completed, setCompleted] = useState(false);
   const [important, setImportant] = useState(false);
-  const currDate = now().toLocaleString();
   const tid = params.id;
   const [task, setTask] = useState(null);
   const [isLoading, setLoading] = useState(true);
@@ -20,13 +19,17 @@ export default function Page({ params }: { params: { id: string } }) {
       .then((task) => {
         setTask(task);
         setLoading(false);
+        setTitle(task.title);
+        setDescription(task.description);
+        setDate(task.date);
+        setCompleted(task.isCompleted);
+        setImportant(task.isImportant);
       });
   }, []);
 
   if (isLoading) return toast.success("Loading...");
-  if (!task) return toast.error("No task data");
-  console.log("Ye olde data: ", task);
-
+  if (!task) return "No task data";
+  console.log("Completed: ", completed);
   const handleChange = (name: string) => (e: any) => {
     switch (name) {
       case "title":
@@ -65,10 +68,10 @@ export default function Page({ params }: { params: { id: string } }) {
               className="w-full block rounded-lg border dark:border-none dark:bg-neutral-600 py-[9px] px-3 pr-4 text-sm text-black focus:border-blue-400 focus:ring-1 focus:ring-blue-400 focus:outline-none"
               type="text"
               id="title"
-              // value={task["title"]}
+              value={title}
               name="title"
               onChange={handleChange("title")}
-              placeholder={task["title"]}
+              placeholder="Title here."
             />
           </div>
 
@@ -78,11 +81,11 @@ export default function Page({ params }: { params: { id: string } }) {
             <textarea
               className="w-full block rounded-lg border dark:border-none dark:bg-neutral-600 py-[9px] px-3 pr-4 text-sm text-black focus:border-blue-400 focus:ring-1 focus:ring-blue-400 focus:outline-none"
               id="description"
-              // value={task["description"]}
+              value={description}
               onChange={handleChange("description")}
               name="description"
               rows={4}
-              placeholder={task["description"]}
+              placeholder="Description here."
             ></textarea>
           </div>
 
@@ -93,10 +96,9 @@ export default function Page({ params }: { params: { id: string } }) {
               className="w-40 block rounded-lg border dark:border-none dark:bg-neutral-600 py-[9px] px-3 pr-4 text-sm text-black focus:border-blue-400 focus:ring-1 focus:ring-blue-400 focus:outline-none"
               type="date"
               id="date"
-              // value={task["date"]}
+              value={date}
               name="date"
-              // onChange={handleChange("date")}
-              placeholder={task["date"]}
+              onChange={handleChange("date")}
             />
           </div>
 
@@ -112,7 +114,7 @@ export default function Page({ params }: { params: { id: string } }) {
               className="w-4 h-4 text-blue-500 bg-gray-100 border-gray-300 rounded focus:ring-blue-400 dark:focus:ring-blue-500 dark:ring-offset-gray-700 focus:ring-1 dark:bg-gray-700 dark:border-gray-600 hover:cursor-pointer"
               type="checkbox"
               id="completed"
-              value={task["isCompleted"]} //{task.completed}
+              checked={completed}
               name="completed"
               onChange={handleChange("completed")}
             />
@@ -130,9 +132,9 @@ export default function Page({ params }: { params: { id: string } }) {
               className="w-4 h-4 text-blue-500 bg-gray-100 border-gray-300 rounded focus:ring-blue-400 dark:focus:ring-blue-500 dark:ring-offset-gray-700 focus:ring-1 dark:bg-gray-700 dark:border-gray-600 hover:cursor-pointer"
               type="checkbox"
               id="important"
-              value={task["isImportant"]} //{task.important}
+              checked={important}
               name="important"
-              // onChange={handleChange("important")}
+              onChange={handleChange("important")}
             />
           </div>
           <div>
