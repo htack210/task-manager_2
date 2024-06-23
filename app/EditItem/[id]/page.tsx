@@ -1,28 +1,53 @@
 "use client";
-import { useGlobalState } from "@/app/context/globalProvider";
-import axios from "axios";
 import { now } from "moment";
-import { checkIsOnDemandRevalidate } from "next/dist/server/api-utils";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default function Page({ params }: { params: { id: string } }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [completed, setCompleted] = useState(false);
   const [important, setImportant] = useState(false);
-  // const { allTasks, closeModalEdit } = useGlobalState();
   const currDate = now().toLocaleString();
   const tid = params.id;
-  const res = await axios.get(`/api/tasks/${tid}`);
-  const task = res?.data;
+  const [task, setTask] = useState(null);
+  const [isLoading, setLoading] = useState(true);
 
-  if (res) {
-    console.log("Ye olde data: ", task);
-  } else {
-    return toast.error("Your toast is burnt. Error retrieving task!\n");
-  }
+  useEffect(() => {
+    fetch(`/api/tasks/${tid}`)
+      .then((res) => res.json())
+      .then((task) => {
+        setTask(task);
+        setLoading(false);
+      });
+  }, []);
+
+  if (isLoading) return toast.success("Loading...");
+  if (!task) return toast.error("No task data");
+  console.log("Ye olde data: ", task);
+
+  const handleChange = (name: string) => (e: any) => {
+    switch (name) {
+      case "title":
+        setTitle(e.target.value);
+        break;
+      case "description":
+        setDescription(e.target.value);
+        break;
+      case "date":
+        setDate(e.target.value);
+        break;
+      case "completed":
+        setCompleted(e.target.checked);
+        break;
+      case "important":
+        setImportant(e.target.checked);
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <>
@@ -40,10 +65,10 @@ export default async function Page({ params }: { params: { id: string } }) {
               className="w-full block rounded-lg border dark:border-none dark:bg-neutral-600 py-[9px] px-3 pr-4 text-sm text-black focus:border-blue-400 focus:ring-1 focus:ring-blue-400 focus:outline-none"
               type="text"
               id="title"
-              value={task.title}
+              // value={task["title"]}
               name="title"
-              // onChange={handleChange("title")}
-              placeholder="Your title here"
+              onChange={handleChange("title")}
+              placeholder={task["title"]}
             />
           </div>
 
@@ -53,11 +78,11 @@ export default async function Page({ params }: { params: { id: string } }) {
             <textarea
               className="w-full block rounded-lg border dark:border-none dark:bg-neutral-600 py-[9px] px-3 pr-4 text-sm text-black focus:border-blue-400 focus:ring-1 focus:ring-blue-400 focus:outline-none"
               id="description"
-              value={task.description}
-              // onChange={handleChange("description")}
+              // value={task["description"]}
+              onChange={handleChange("description")}
               name="description"
               rows={4}
-              placeholder="Your task description here."
+              placeholder={task["description"]}
             ></textarea>
           </div>
 
@@ -68,10 +93,10 @@ export default async function Page({ params }: { params: { id: string } }) {
               className="w-40 block rounded-lg border dark:border-none dark:bg-neutral-600 py-[9px] px-3 pr-4 text-sm text-black focus:border-blue-400 focus:ring-1 focus:ring-blue-400 focus:outline-none"
               type="date"
               id="date"
-              value={task.date}
+              // value={task["date"]}
               name="date"
               // onChange={handleChange("date")}
-              placeholder="Enter a date here."
+              placeholder={task["date"]}
             />
           </div>
 
@@ -87,9 +112,9 @@ export default async function Page({ params }: { params: { id: string } }) {
               className="w-4 h-4 text-blue-500 bg-gray-100 border-gray-300 rounded focus:ring-blue-400 dark:focus:ring-blue-500 dark:ring-offset-gray-700 focus:ring-1 dark:bg-gray-700 dark:border-gray-600 hover:cursor-pointer"
               type="checkbox"
               id="completed"
-              value={task.isCompleted.toString()} //{task.completed}
+              value={task["isCompleted"]} //{task.completed}
               name="completed"
-              // onChange={handleChange("completed")}
+              onChange={handleChange("completed")}
             />
           </div>
 
@@ -105,7 +130,7 @@ export default async function Page({ params }: { params: { id: string } }) {
               className="w-4 h-4 text-blue-500 bg-gray-100 border-gray-300 rounded focus:ring-blue-400 dark:focus:ring-blue-500 dark:ring-offset-gray-700 focus:ring-1 dark:bg-gray-700 dark:border-gray-600 hover:cursor-pointer"
               type="checkbox"
               id="important"
-              value={task.isImportant} //{task.important}
+              value={task["isImportant"]} //{task.important}
               name="important"
               // onChange={handleChange("important")}
             />
