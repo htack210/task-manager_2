@@ -47,7 +47,9 @@ const TasksStyled = styled.main`
   overflow-x: hidden;
 
   &::-webkit-scrollbar-thumb {
-    background: #27ae60;
+    // background: linear-gradient(#27ae60, #323232, #dc2626);
+    background: linear-gradient(#27ae60, #ffffff);
+    // background: #27ae60;
     border-radius: 3rem;
   }
 
