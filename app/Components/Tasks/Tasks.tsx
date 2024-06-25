@@ -46,6 +46,11 @@ const TasksStyled = styled.main`
   overflow-y: auto;
   overflow-x: hidden;
 
+  &::-webkit-scrollbar-thumb {
+    background: #27ae60;
+    border-radius: 3rem;
+  }
+
   &::-webkit-scrollbar {
     width: 0.5rem;
   }
