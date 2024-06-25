@@ -1,5 +1,5 @@
 "use client";
-import { now } from "moment";
+import { useGlobalState } from "@/app/context/globalProvider";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -12,6 +12,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const tid = params.id;
   const [task, setTask] = useState(null);
   const [isLoading, setLoading] = useState(true);
+  const { updateThisTask } = useGlobalState();
 
   useEffect(() => {
     fetch(`/api/tasks/${tid}`)
@@ -29,7 +30,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   if (isLoading) return toast.success("Loading...");
   if (!task) return "No task data";
-  console.log("Completed: ", completed);
+
   const handleChange = (name: string) => (e: any) => {
     switch (name) {
       case "title":
@@ -52,11 +53,31 @@ export default function Page({ params }: { params: { id: string } }) {
     }
   };
 
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   updateTask(task);
+  // };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const updatedTask = {
+      id: tid,
+      title: title,
+      description: description,
+      date: date,
+      isCompleted: completed,
+      isImportant: important,
+    };
+
+    updateThisTask(updatedTask);
+  };
+
   return (
     <>
       <div className="flex justify-center flex-row m-auto">
         <form
-          // onSubmit={handleSubmit}
+          onSubmit={handleSubmit}
           className="task-form bg-neutral-700 rounded-2xl border-2 border-gray-600 p-4 w-96"
         >
           <h1 className="text-3xl text-center">Edit Task</h1>
@@ -141,6 +162,9 @@ export default function Page({ params }: { params: { id: string } }) {
           </div>
           <div>
             <button
+              // onClick={() => {
+              //   updateTask(task);
+              // }}
               type="submit"
               className="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-md"
             >

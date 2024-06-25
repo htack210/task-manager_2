@@ -58,7 +58,7 @@ function CreateContent() {
         allTasks();
       }
     } catch (error) {
-      toast.error("Something went wrong. Your toast is burnt!\n" + error);
+      toast.error("Your toast is burnt! Unable to create task.\n" + error);
       console.log(error);
     }
   };

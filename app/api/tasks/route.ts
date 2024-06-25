@@ -69,7 +69,7 @@ export async function GET(req: Request) {
 export async function PUT(req: Request) {
     try {
         const { userId } = auth();
-        const { isCompleted, id } = await req.json();
+        const { isCompleted, isImportant, id, title, description, date } = await req.json();
 
         if (!userId) {
             return NextResponse.json({ error: "Dun-dun-duuuuun! Unauthorized", status: 401 });
@@ -80,7 +80,11 @@ export async function PUT(req: Request) {
                 id,
             },
             data: {
+                title,
+                description,
+                date,
                 isCompleted,
+                isImportant
             },
         });
 

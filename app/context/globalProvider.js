@@ -77,7 +77,18 @@ export const GlobalProvider = ({ children }) => {
   const updateTask = async (task) => {
     try {
       const res = await axios.put(`/api/tasks`, task);
+      toast.success("Task updated!");
 
+      allTasks();
+    } catch (error) {
+      console.log("Error updating task.", error);
+      toast.error("Error updating task.");
+    }
+  };
+
+  const updateThisTask = async (task) => {
+    try {
+      const res = await axios.put(`/api/tasks/`, task);
       toast.success("Task updated!");
 
       allTasks();
@@ -106,6 +117,7 @@ export const GlobalProvider = ({ children }) => {
         importantTasks,
         incompleteTasks,
         updateTask,
+        updateThisTask,
         modal,
         modalEdit,
         openModal,
